@@ -3,898 +3,609 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OE Italia - Dichiarazione per rimborso km</title>
+<title>OE Italia — Dichiarazione rimborso km</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
+  :root {
+    --pink: #ff4081;
+    --pink-light: #fff0f5;
+    --ink: #1a1a1a;
+    --muted: #6b7280;
+    --border: #e5e7eb;
+    --bg: #f9fafb;
+    --white: #ffffff;
+    --warn: #f59e0b;
+    --warn-bg: #fffbeb;
+    --error: #ef4444;
+    --ok: #10b981;
+    --ok-bg: #ecfdf5;
+    --radius: 10px;
+    --shadow: 0 1px 4px rgba(0,0,0,.08);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--ink); font-size: 15px; line-height: 1.6; }
 
-:root{
-  --ink:#17151F;
-  --paper:#FFFCFA;
-  --pink:#E6007E;
-  --violet:#4B2E83;
-  --mist:#F5EEF8;
-  --mist-2:#FBF3F8;
-  --slate:#6B6575;
-  --line:#E4DEE8;
-  --teal:#0F8A6C;
-  --radius:14px;
-}
+  .page { max-width: 780px; margin: 0 auto; padding: 24px 16px 80px; }
+  header { display: flex; align-items: center; gap: 12px; margin-bottom: 32px; padding-bottom: 20px; border-bottom: 2px solid var(--pink); }
+  header h1 { font-size: 18px; font-weight: 700; color: var(--ink); }
+  header p { font-size: 13px; color: var(--muted); margin-top: 2px; }
 
-*{box-sizing:border-box;}
-html,body{margin:0;padding:0;}
-body{
-  background:var(--mist);
-  color:var(--ink);
-  font-family:'Inter',sans-serif;
-  -webkit-font-smoothing:antialiased;
-}
+  .card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; margin-bottom: 20px; box-shadow: var(--shadow); }
+  .card-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--pink); margin-bottom: 16px; }
 
-.app{
-  max-width:1360px;
-  margin:0 auto;
-  padding:28px 24px 80px;
-}
+  .field { margin-bottom: 16px; }
+  .field label { display: block; font-size: 13px; font-weight: 600; color: var(--ink); margin-bottom: 5px; }
+  .field input, .field select, .field textarea {
+    width: 100%; padding: 9px 12px; border: 1px solid var(--border); border-radius: 7px;
+    font-size: 14px; color: var(--ink); background: var(--white); transition: border .15s;
+    appearance: none;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus { outline: none; border-color: var(--pink); box-shadow: 0 0 0 3px rgba(255,64,129,.1); }
+  .field small { display: block; font-size: 12px; color: var(--muted); margin-top: 4px; }
+  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .row3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
 
-/* ---------- Top bar ---------- */
-.topbar{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:16px;
-  margin-bottom:28px;
-  flex-wrap:wrap;
-}
-.brand{
-  display:flex;
-  align-items:center;
-  gap:12px;
-}
-.brand-mark{
-  width:38px;height:38px;
-  border-radius:50%;
-  background:var(--pink);
-  display:flex;align-items:center;justify-content:center;
-  flex-shrink:0;
-}
-.brand-mark svg{width:22px;height:22px;}
-.brand-text h1{
-  font-family:'Bricolage Grotesque',sans-serif;
-  font-size:19px;
-  font-weight:700;
-  margin:0;
-  letter-spacing:-0.01em;
-}
-.brand-text p{
-  margin:1px 0 0;
-  font-size:12.5px;
-  color:var(--slate);
-}
-.print-btn{
-  background:var(--ink);
-  color:var(--paper);
-  border:none;
-  padding:12px 22px;
-  border-radius:999px;
-  font-family:'Inter',sans-serif;
-  font-weight:600;
-  font-size:14px;
-  cursor:pointer;
-  display:flex;
-  align-items:center;
-  gap:8px;
-  transition:transform .15s ease, background .15s ease;
-}
-.print-btn:hover{background:var(--pink); transform:translateY(-1px);}
-.print-btn svg{width:16px;height:16px;}
+  .rate-link { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: var(--pink); text-decoration: none; margin-top: 8px; }
+  .rate-link:hover { text-decoration: underline; }
 
-/* ---------- Layout ---------- */
-.workspace{
-  display:grid;
-  grid-template-columns:420px 1fr;
-  gap:24px;
-  align-items:start;
-}
-@media (max-width:980px){
-  .workspace{grid-template-columns:1fr;}
-}
+  .check-item { display: flex; gap: 12px; align-items: flex-start; padding: 13px 14px; border-radius: 8px; border: 1px solid var(--border); margin-bottom: 10px; background: var(--bg); cursor: pointer; transition: border .15s, background .15s; }
+  .check-item:hover { border-color: var(--pink); background: var(--pink-light); }
+  .check-item input[type=checkbox] { width: 17px; height: 17px; accent-color: var(--pink); margin-top: 2px; flex-shrink: 0; cursor: pointer; }
+  .check-item .check-text { font-size: 13.5px; line-height: 1.5; }
+  .check-item .check-label { font-weight: 600; display: block; color: var(--ink); }
+  .check-item .check-sub { display: block; color: var(--muted); font-size: 12.5px; }
+  .check-item.required-check.missing { border-color: var(--error); background: #fff5f5; }
+  .check-item.checked { border-color: var(--ok); background: var(--ok-bg); }
 
-/* ---------- Panel (form) ---------- */
-.panel{
-  background:var(--paper);
-  border-radius:var(--radius);
-  border:1px solid var(--line);
-  padding:22px;
-}
-.panel + .panel{margin-top:18px;}
+  .exception-block { border: 1px solid var(--warn); border-radius: 8px; padding: 14px; background: var(--warn-bg); margin-top: 8px; display: none; }
+  .exception-block.visible { display: block; }
+  .exception-block label { font-size: 13px; font-weight: 700; color: #92400e; display: block; margin-bottom: 6px; }
+  .exception-block textarea { min-height: 72px; font-size: 13px; resize: vertical; }
+  .exception-block .warn-icon { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: #92400e; margin-bottom: 8px; }
 
-.section-eyebrow{
-  font-family:'Space Mono',monospace;
-  font-size:11px;
-  letter-spacing:.08em;
-  text-transform:uppercase;
-  color:var(--pink);
-  margin:0 0 4px;
-}
-.section-title{
-  font-family:'Bricolage Grotesque',sans-serif;
-  font-size:17px;
-  font-weight:700;
-  margin:0 0 16px;
-}
+  .checks-divider { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); margin: 14px 0 8px; }
 
-.field{margin-bottom:14px;}
-.field label{
-  display:block;
-  font-size:12.5px;
-  font-weight:600;
-  color:var(--slate);
-  margin-bottom:5px;
-}
-.field .hint{
-  font-size:11.5px;
-  color:var(--slate);
-  margin-top:4px;
-  line-height:1.4;
-}
-input[type=text], input[type=number], input[type=date], select, textarea{
-  width:100%;
-  border:1.5px solid var(--line);
-  border-radius:9px;
-  padding:9px 11px;
-  font-family:'Inter',sans-serif;
-  font-size:13.5px;
-  color:var(--ink);
-  background:var(--paper);
-  transition:border-color .15s ease;
-}
-input.mono, .mono-input{
-  font-family:'Space Mono',monospace;
-}
-input:focus, select:focus, textarea:focus{
-  outline:none;
-  border-color:var(--pink);
-}
-.row2{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
-.row3{display:grid; grid-template-columns:1.4fr 1fr 1fr; gap:10px;}
+  .route-item { border: 1px solid var(--border); border-radius: 8px; padding: 14px; margin-bottom: 10px; background: var(--bg); }
+  .route-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+  .route-num { font-size: 12px; font-weight: 700; color: var(--pink); }
+  .route-remove { background: none; border: none; cursor: pointer; color: var(--muted); font-size: 18px; line-height: 1; padding: 0 4px; }
+  .route-remove:hover { color: var(--error); }
 
-.check-row{
-  display:flex;
-  gap:10px;
-  align-items:flex-start;
-  padding:10px 0;
-  border-top:1px solid var(--line);
-}
-.check-row:first-of-type{border-top:none;}
-.check-row input[type=checkbox]{
-  margin-top:2px;
-  width:16px;height:16px;
-  accent-color:var(--pink);
-  flex-shrink:0;
-}
-.check-row span{font-size:13px; line-height:1.45;}
+  .btn { display: inline-flex; align-items: center; gap: 7px; padding: 9px 18px; border-radius: 7px; font-size: 14px; font-weight: 600; cursor: pointer; border: none; transition: opacity .15s; }
+  .btn-outline { background: var(--white); border: 1.5px solid var(--pink); color: var(--pink); }
+  .btn-outline:hover { background: var(--pink-light); }
+  .btn-primary { background: var(--pink); color: var(--white); }
+  .btn-primary:hover { opacity: .88; }
+  .btn-primary:disabled { opacity: .45; cursor: not-allowed; }
+  .btn-add { background: var(--white); border: 1.5px dashed var(--border); color: var(--muted); width: 100%; justify-content: center; padding: 11px; margin-top: 4px; }
+  .btn-add:hover { border-color: var(--pink); color: var(--pink); background: var(--pink-light); }
 
-/* Tentacle route motif */
-.route-motif{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  margin:4px 0 16px;
-}
-.route-motif svg{flex:1; height:26px; display:block;}
-.route-motif .count{
-  font-family:'Space Mono',monospace;
-  font-size:11px;
-  color:var(--violet);
-  background:var(--mist-2);
-  border-radius:6px;
-  padding:3px 7px;
-  white-space:nowrap;
-}
+  .totals { border-top: 2px solid var(--border); margin-top: 16px; padding-top: 14px; display: flex; justify-content: space-between; align-items: center; }
+  .totals .label { font-size: 13px; color: var(--muted); }
+  .totals .value { font-size: 22px; font-weight: 800; color: var(--ink); }
+  .totals .km-line { font-size: 13px; color: var(--muted); text-align: right; }
 
-/* Trip rows */
-.trip{
-  border:1.5px solid var(--line);
-  border-radius:10px;
-  padding:12px;
-  margin-bottom:10px;
-  position:relative;
-  background:var(--mist-2);
-}
-.trip-head{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:8px;
-}
-.trip-head span{
-  font-family:'Space Mono',monospace;
-  font-size:11px;
-  color:var(--violet);
-}
-.remove-btn{
-  background:none;
-  border:none;
-  color:var(--slate);
-  cursor:pointer;
-  font-size:12px;
-  text-decoration:underline;
-  padding:0;
-}
-.remove-btn:hover{color:var(--pink);}
-.aci-link{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  background:var(--mist-2);
-  border:1.5px solid var(--violet);
-  color:var(--violet);
-  border-radius:9px;
-  padding:9px 12px;
-  font-size:13px;
-  font-weight:600;
-  text-decoration:none;
-  margin:2px 0 8px;
-  transition:background .15s ease;
-}
-.aci-link:hover{background:#EFE6F5;}
-.aci-link svg{width:15px;height:15px; flex-shrink:0;}
-.add-trip{
-  width:100%;
-  border:1.5px dashed var(--pink);
-  background:none;
-  color:var(--pink);
-  border-radius:10px;
-  padding:10px;
-  font-weight:600;
-  font-size:13px;
-  cursor:pointer;
-  font-family:'Inter',sans-serif;
-}
-.add-trip:hover{background:var(--mist-2);}
+  #preview { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 32px; margin-top: 28px; display: none; }
+  #preview.visible { display: block; }
+  .preview-badge { font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--muted); letter-spacing: .1em; margin-bottom: 20px; }
+  .preview-company { font-size: 18px; font-weight: 800; color: var(--pink); margin-bottom: 4px; }
+  .preview-version { font-size: 11px; color: var(--muted); margin-bottom: 28px; }
+  #preview h2 { font-size: 15px; font-weight: 700; border-bottom: 1px solid var(--border); padding-bottom: 6px; margin: 20px 0 10px; }
+  #preview p { font-size: 13.5px; line-height: 1.7; margin-bottom: 6px; }
+  #preview table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 8px; }
+  #preview th { background: var(--bg); text-align: left; padding: 7px 10px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; }
+  #preview td { padding: 7px 10px; border-bottom: 1px solid var(--border); }
+  .sig-row { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 32px; }
+  .sig-box { border-top: 1.5px solid var(--ink); padding-top: 6px; font-size: 12px; color: var(--muted); }
 
-/* ---------- Preview / Document ---------- */
-.doc-wrap{
-  background:var(--paper);
-  border-radius:var(--radius);
-  border:1px solid var(--line);
-  padding:0;
-  overflow:hidden;
-}
-.doc-toolbar{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:14px 22px;
-  border-bottom:1px solid var(--line);
-  background:var(--mist-2);
-}
-.doc-toolbar .label{
-  font-family:'Space Mono',monospace;
-  font-size:11px;
-  letter-spacing:.06em;
-  text-transform:uppercase;
-  color:var(--slate);
-}
-.status-pill{
-  font-size:11px;
-  font-weight:700;
-  padding:4px 10px;
-  border-radius:999px;
-  font-family:'Inter',sans-serif;
-}
-.status-ok{background:#E4F5EE; color:var(--teal);}
-.status-warn{background:#FDEFE0; color:#B5650E;}
+  .action-row { display: flex; gap: 12px; margin-top: 24px; flex-wrap: wrap; }
+  #validation-hint { margin-top: 12px; font-size: 13px; color: var(--error); display: none; }
 
-#doc{
-  padding:40px 46px 50px;
-}
-.doc-logo-row{
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-start;
-  margin-bottom:26px;
-}
-.doc-logo{display:flex; align-items:center; gap:10px;}
-.doc-logo .mark{
-  width:30px;height:30px;border-radius:50%;
-  background:var(--pink);
-  display:flex;align-items:center;justify-content:center;
-}
-.doc-logo .mark svg{width:17px;height:17px;}
-.doc-logo strong{font-family:'Bricolage Grotesque',sans-serif; font-size:15px;}
-.doc-version{font-family:'Space Mono',monospace; font-size:10.5px; color:var(--slate);}
+  /* custom addr input inside route */
+  .custom-addr { margin-top: 6px; display: none; }
 
-.doc h2.allegato{
-  font-family:'Space Mono',monospace;
-  font-size:11px;
-  letter-spacing:.1em;
-  text-transform:uppercase;
-  color:var(--pink);
-  margin:0 0 2px;
-}
-.doc h1.doc-title{
-  font-family:'Bricolage Grotesque',sans-serif;
-  font-size:22px;
-  font-weight:700;
-  margin:0 0 22px;
-  letter-spacing:-0.01em;
-}
-
-.doc p{font-size:13.5px; line-height:1.7; margin:0 0 14px;}
-.blank{
-  border-bottom:1.3px solid var(--ink);
-  padding:0 2px;
-  font-family:'Space Mono',monospace;
-  font-weight:700;
-}
-.sede-list{margin:0 0 22px; padding:0; list-style:none;}
-.sede-list li{
-  font-size:13.5px;
-  margin-bottom:5px;
-  display:flex;
-  align-items:center;
-  gap:8px;
-}
-.sede-list .box{
-  width:13px;height:13px;
-  border:1.5px solid var(--ink);
-  border-radius:3px;
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  flex-shrink:0;
-}
-.sede-list .box.checked{background:var(--pink); border-color:var(--pink);}
-.sede-list .box.checked::after{content:"✓"; color:#fff; font-size:10px; line-height:1;}
-
-.doc h3{
-  font-family:'Bricolage Grotesque',sans-serif;
-  font-size:14.5px;
-  color:var(--violet);
-  margin:26px 0 10px;
-}
-.decl-list{list-style:none; margin:0 0 10px; padding:0;}
-.decl-list li{
-  display:flex;
-  gap:9px;
-  align-items:flex-start;
-  font-size:13.2px;
-  line-height:1.55;
-  margin-bottom:9px;
-}
-.decl-list .box{
-  width:13px;height:13px;
-  border:1.5px solid var(--ink);
-  border-radius:3px;
-  flex-shrink:0;
-  margin-top:2px;
-  display:inline-flex;align-items:center;justify-content:center;
-}
-.decl-list .box.checked{background:var(--pink); border-color:var(--pink);}
-.decl-list .box.checked::after{content:"✓"; color:#fff; font-size:10px;}
-.decl-note{font-size:12px; color:var(--slate); font-style:italic; margin-left:22px;}
-
-.veh-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:6px 22px;
-  font-size:13.5px;
-  margin:10px 0 4px;
-}
-.veh-grid div{display:flex; justify-content:space-between; border-bottom:1px dotted var(--line); padding:4px 0;}
-.veh-grid span.k{color:var(--slate);}
-.veh-grid span.v{font-family:'Space Mono',monospace; font-weight:700;}
-
-table.trip-table{
-  width:100%;
-  border-collapse:collapse;
-  margin:12px 0 6px;
-  font-size:12.5px;
-}
-table.trip-table th{
-  background:var(--mist);
-  font-family:'Inter',sans-serif;
-  font-weight:700;
-  text-align:left;
-  padding:8px 9px;
-  border:1px solid var(--line);
-  color:var(--violet);
-}
-table.trip-table td{
-  padding:8px 9px;
-  border:1px solid var(--line);
-  vertical-align:top;
-}
-table.trip-table td.num{text-align:right; font-family:'Space Mono',monospace;}
-table.trip-table tfoot td{
-  font-weight:700;
-  background:var(--mist-2);
-  font-family:'Space Mono',monospace;
-}
-
-.calc-box{
-  margin-top:20px;
-  border:1.5px solid var(--ink);
-  border-radius:10px;
-  padding:16px 18px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  flex-wrap:wrap;
-  gap:10px;
-}
-.calc-box .formula{font-size:12.5px; color:var(--slate);}
-.calc-box .total{
-  font-family:'Bricolage Grotesque',sans-serif;
-  font-size:24px;
-  font-weight:700;
-  color:var(--pink);
-}
-
-.conditions{margin:20px 0;}
-.conditions ol{padding-left:18px; margin:6px 0 0;}
-.conditions li{font-size:12.8px; line-height:1.6; margin-bottom:6px;}
-
-.sign-row{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:30px;
-  margin-top:34px;
-}
-.sign-block .line{
-  border-bottom:1.3px solid var(--ink);
-  height:34px;
-}
-.sign-block p{margin-top:6px; font-size:12px; color:var(--slate);}
-.luogo-data{font-size:13.5px; margin-top:26px;}
-
-.doc-footer-note{
-  margin-top:22px;
-  font-size:11.5px;
-  color:var(--slate);
-  font-style:italic;
-}
-.legal-footer{
-  margin-top:36px;
-  padding-top:14px;
-  border-top:1px solid var(--line);
-  font-size:9.5px;
-  color:var(--slate);
-  line-height:1.5;
-}
-
-/* ---------- Print ---------- */
-@media print{
-  body{background:#fff;}
-  .no-print{display:none !important;}
-  .app{padding:0; max-width:none;}
-  .workspace{display:block;}
-  .doc-wrap{border:none; border-radius:0;}
-  .doc-toolbar{display:none;}
-  #doc{padding:6mm 4mm;}
-  @page{ size:A4; margin:14mm; }
-}
+  @media print {
+    * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    body { background: white !important; }
+    .page { padding: 0 !important; max-width: 100% !important; }
+    header, .card, .action-row, #validation-hint { display: none !important; }
+    #preview {
+      display: block !important;
+      border: none !important;
+      padding: 20px !important;
+      box-shadow: none !important;
+      margin: 0 !important;
+    }
+    .preview-badge { display: none !important; }
+    #preview h2 { border-bottom: 1px solid #ccc !important; }
+    .sig-row { margin-top: 48px !important; }
+  }
+  @media (max-width: 540px) {
+    .row2, .row3 { grid-template-columns: 1fr; }
+    .sig-row { grid-template-columns: 1fr; }
+  }
 </style>
 </head>
 <body>
+<div class="page">
 
-<div class="app">
+  <header>
+    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="20" cy="20" r="20" fill="#ff4081"/>
+      <text x="20" y="27" text-anchor="middle" font-size="21" font-weight="900" fill="white" font-family="Arial, sans-serif">O</text>
+    </svg>
+    <div>
+      <h1>Dichiarazione rimborso chilometrico</h1>
+      <p>Linee guida spese e rimborsi · OE Italia v_2</p>
+    </div>
+  </header>
 
-  <div class="topbar no-print">
-    <div class="brand">
-      <div class="brand-mark">
-        <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="9" r="6" fill="#fff"/><path d="M6 12c-2 3-2 6 0 6s2-2 2-4M18 12c2 3 2 6 0 6s-2-2-2-4M9 15c-1 2.5-1 5 .5 5s1-2 1-3.5M15 15c1 2.5 1 5-.5 5s-1-2-1-3.5" stroke="#fff" stroke-width="1.3" stroke-linecap="round"/></svg>
+  <!-- 01 DIPENDENTE -->
+  <div class="card">
+    <div class="card-title">01 — Dipendente</div>
+    <div class="field">
+      <label>Nome e cognome</label>
+      <input type="text" id="nome" placeholder="Mario Rossi" oninput="updateTotals()">
+    </div>
+    <div class="row2">
+      <div class="field">
+        <label>Codice fiscale</label>
+        <input type="text" id="cf" placeholder="RSSMRA80A01H501U" oninput="updateTotals()">
       </div>
-      <div class="brand-text">
-        <h1>OE Italia - Dichiarazione per rimborso km</h1>
-        <p>Linee guida spese e rimborsi, OE Italia v_2</p>
+      <div class="field">
+        <label>Sede aziendale di assunzione</label>
+        <select id="sede" onchange="updateTotals()">
+          <option value="">— seleziona —</option>
+          <option value="Milano">Milano</option>
+          <option value="Ancarano">Ancarano</option>
+          <option value="Roma">Roma</option>
+          <option value="Ascoli Piceno">Ascoli Piceno</option>
+        </select>
       </div>
     </div>
-    <button class="print-btn" onclick="window.print()">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V2h12v7M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2M6 14h12v8H6v-8z"/></svg>
-      Stampa / salva PDF
+  </div>
+
+  <!-- 02 DICHIARAZIONI -->
+  <div class="card">
+    <div class="card-title">02 — Dichiarazioni obbligatorie</div>
+
+    <div class="checks-divider">Valutazione alternative di trasporto</div>
+
+    <label class="check-item required-check" id="wrap-perk">
+      <input type="checkbox" id="chk-perk" onchange="onCheckChange()">
+      <span class="check-text">
+        <span class="check-label">Confermo di aver valutato l'uso di mezzi pubblici su Perk</span>
+        <span class="check-sub">Treni, bus e metro acquistabili tramite benefit aziendale — risultavano non idonei o non disponibili per questo tragitto.</span>
+      </span>
+    </label>
+
+    <label class="check-item required-check" id="wrap-pub">
+      <input type="checkbox" id="chk-pub" onchange="onCheckChange()">
+      <span class="check-text">
+        <span class="check-label">Confermo di aver valutato l'uso di mezzi pubblici non su Perk</span>
+        <span class="check-sub">Trasporto pubblico ordinario acquistato autonomamente — risultava non idoneo o non disponibile.</span>
+      </span>
+    </label>
+
+    <label class="check-item required-check" id="wrap-auto">
+      <input type="checkbox" id="chk-auto" onchange="onCheckChange()">
+      <span class="check-text">
+        <span class="check-label">Confermo di aver valutato l'uso dell'auto aziendale</span>
+        <span class="check-sub">L'auto aziendale risultava già prenotata o non disponibile per questa trasferta.</span>
+      </span>
+    </label>
+
+    <div class="checks-divider" style="margin-top:18px;">Veicolo utilizzato</div>
+
+    <label class="check-item required-check" id="wrap-veicolo">
+      <input type="checkbox" id="chk-veicolo" onchange="onCheckChange()">
+      <span class="check-text">
+        <span class="check-label">Il veicolo è di mia proprietà o il mio nome è riportato sulla carta di circolazione</span>
+      </span>
+    </label>
+
+    <div class="checks-divider" style="margin-top:18px;">Punto di partenza e rientro</div>
+
+    <label class="check-item" id="wrap-sede-chk">
+      <input type="checkbox" id="chk-sede" onchange="onSedeChange()">
+      <span class="check-text">
+        <span class="check-label">Il viaggio è iniziato ed è terminato presso la sede contrattuale di lavoro</span>
+        <span class="check-sub">Lascia deselezionato se hai iniziato o terminato il viaggio da un luogo diverso dalla sede (es. abitazione).</span>
+      </span>
+    </label>
+
+    <div class="exception-block" id="exception-block">
+      <div class="warn-icon">⚠️ Partenza o rientro da luogo diverso dalla sede — giustifica l'eccezione</div>
+      <label for="exception-text">Motivazione obbligatoria</label>
+      <textarea id="exception-text" placeholder="Es.: trasferta iniziata direttamente dall'abitazione per ottimizzare i tempi di viaggio, con autorizzazione del Team Leader del __/__/____." oninput="updateButtonState()"></textarea>
+      <small style="margin-top:6px;display:block;font-size:12px;color:#92400e;">Questa motivazione è richiesta per generare il PDF. Compilando i tragitti, inserisci l'indirizzo esatto di partenza/arrivo nel campo "Altro indirizzo".</small>
+    </div>
+
+  </div>
+
+  <!-- 03 VEICOLO -->
+  <div class="card">
+    <div class="card-title">03 — Dati del mezzo</div>
+    <div class="row2">
+      <div class="field">
+        <label>Marca e modello</label>
+        <input type="text" id="modello" placeholder="Fiat Panda 1.0" oninput="updateTotals()">
+      </div>
+      <div class="field">
+        <label>Targa</label>
+        <input type="text" id="targa" placeholder="AB123CD" oninput="updateTotals()">
+      </div>
+    </div>
+    <div class="row3">
+      <div class="field">
+        <label>Cilindrata (cc)</label>
+        <input type="number" id="cilindrata" placeholder="1000" oninput="updateTotals()">
+      </div>
+      <div class="field">
+        <label>Anno</label>
+        <input type="number" id="anno" placeholder="2019" oninput="updateTotals()">
+      </div>
+      <div class="field">
+        <label>Alimentazione</label>
+        <select id="alimentazione" onchange="updateTotals()">
+          <option value="">—</option>
+          <option>Benzina</option>
+          <option>Diesel</option>
+          <option>GPL</option>
+          <option>Metano</option>
+          <option>Ibrida</option>
+          <option>Elettrica</option>
+        </select>
+      </div>
+    </div>
+    <div class="field">
+      <label>Tariffa JET HR (€/km)</label>
+      <input type="number" id="tariffa" step="0.0001" placeholder="0.4200" oninput="updateTotals()">
+      <small>Usa la tariffa presente nella tua scheda veicolo su JET HR — basata sulle tabelle ACI a 20.000 km/anno.</small>
+      <a class="rate-link" href="https://sso.jethr.com/#/" target="_blank" rel="noopener">
+        <svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z"/><path d="M5 5a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z"/></svg>
+        Apri JET HR → Rimborso spese, Chilometrico
+      </a>
+    </div>
+  </div>
+
+  <!-- 04 TRASFERTA -->
+  <div class="card">
+    <div class="card-title">04 — Tragitti percorsi</div>
+    <div id="routes-container"></div>
+    <button class="btn btn-add" onclick="addRoute()">+ Aggiungi tragitto</button>
+
+    <div class="totals">
+      <div>
+        <div class="label">Totale km</div>
+        <div class="value" id="total-km">0 km</div>
+      </div>
+      <div style="text-align:right">
+        <div class="km-line" id="rate-line">× — €/km</div>
+        <div class="value" id="total-euro">€ 0,00</div>
+        <div class="label">rimborso calcolato</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 05 FIRMA -->
+  <div class="card">
+    <div class="card-title">05 — Luogo e data compilazione</div>
+    <div class="row2">
+      <div class="field">
+        <label>Luogo</label>
+        <input type="text" id="luogo" placeholder="Milano" oninput="updateTotals()">
+      </div>
+      <div class="field">
+        <label>Data</label>
+        <input type="date" id="data-firma" oninput="updateTotals()">
+      </div>
+    </div>
+  </div>
+
+  <div class="action-row">
+    <button class="btn btn-primary" id="btn-genera" onclick="genera()" disabled>
+      <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V7.414A2 2 0 0015.414 6L12 2.586A2 2 0 0010.586 2H6zm5 6a1 1 0 10-2 0v3.586l-1.293-1.293a1 1 0 10-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 11.586V8z"/></svg>
+      Genera documento
+    </button>
+    <button class="btn btn-outline" onclick="stampaPDF()">
+      <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5 4v3H4a2 2 0 00-2 2v3a2 2 0 002 2h1v2a2 2 0 002 2h6a2 2 0 002-2v-2h1a2 2 0 002-2V9a2 2 0 00-2-2h-1V4a2 2 0 00-2-2H7a2 2 0 00-2 2zm8 0H7v3h6V4zm0 8H7v4h6v-4z" clip-rule="evenodd"/></svg>
+      Stampa / PDF
     </button>
   </div>
+  <div id="validation-hint"></div>
 
-  <div class="workspace">
-
-    <!-- ===================== FORM PANEL ===================== -->
-    <div class="no-print">
-
-      <div class="panel">
-        <p class="section-eyebrow">01 — Dipendente</p>
-        <h2 class="section-title">Chi sei</h2>
-        <div class="field">
-          <label for="nome">Nome e cognome</label>
-          <input type="text" id="nome" placeholder="Mario Rossi" oninput="render()">
-        </div>
-        <div class="field">
-          <label for="cf">Codice fiscale</label>
-          <input type="text" id="cf" class="mono-input" placeholder="RSSMRA80A01F205X" oninput="render()">
-        </div>
-        <div class="field">
-          <label for="sede">Sede aziendale di assunzione</label>
-          <select id="sede" onchange="render()">
-            <option value="Milano">Milano</option>
-            <option value="Ancarano">Ancarano</option>
-            <option value="Roma">Roma</option>
-            <option value="Ascoli Piceno">Ascoli Piceno</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="panel">
-        <p class="section-eyebrow">02 — Responsabilità</p>
-        <h2 class="section-title">Dichiarazioni obbligatorie</h2>
-        <div class="check-row">
-          <input type="checkbox" id="chk1" checked onchange="render()">
-          <span>L'uso del mezzo proprio si è reso necessario in quanto i mezzi pubblici non erano idonei/utilizzabili e l'auto aziendale risultava già prenotata o non disponibile.</span>
-        </div>
-        <div class="check-row">
-          <input type="checkbox" id="chk2" checked onchange="render()">
-          <span>Il veicolo utilizzato è di mia proprietà o il mio nome è riportato sulla carta di circolazione del mezzo.</span>
-        </div>
-        <div class="check-row">
-          <input type="checkbox" id="chk3" checked onchange="render()">
-          <span>Il viaggio è iniziato ed è terminato presso la sede contrattuale di lavoro.</span>
-        </div>
-        <div class="field" style="margin-top:10px;">
-          <label for="motivoDiverso">Se partenza/rientro da luogo diverso (es. abitazione), specifica il motivo</label>
-          <textarea id="motivoDiverso" rows="2" placeholder="Facoltativo — compila solo se rilevante" oninput="render()"></textarea>
-        </div>
-      </div>
-
-      <div class="panel">
-        <p class="section-eyebrow">03 — Veicolo</p>
-        <h2 class="section-title">Dati del mezzo</h2>
-        <div class="row2">
-          <div class="field">
-            <label for="marca">Marca e modello</label>
-            <input type="text" id="marca" placeholder="Fiat Panda" oninput="render()">
-          </div>
-          <div class="field">
-            <label for="cilindrata">Cilindrata</label>
-            <input type="text" id="cilindrata" placeholder="1200 cc" oninput="render()">
-          </div>
-        </div>
-        <div class="row2">
-          <div class="field">
-            <label for="targa">Targa</label>
-            <input type="text" id="targa" class="mono-input" placeholder="AB123CD" oninput="render()">
-          </div>
-          <div class="field">
-            <label for="anno">Anno</label>
-            <input type="text" id="anno" placeholder="2022" oninput="render()">
-          </div>
-        </div>
-        <div class="row2">
-          <div class="field">
-            <label for="alimentazione">Alimentazione</label>
-            <select id="alimentazione" onchange="render()">
-              <option>Benzina</option>
-              <option>Diesel</option>
-              <option>GPL</option>
-              <option>Metano</option>
-              <option>Ibrida</option>
-              <option>Elettrica</option>
-            </select>
-          </div>
-          <div class="field">
-            <label for="tariffa">Tariffa ACI (€/km)</label>
-            <input type="number" step="0.0001" id="tariffa" placeholder="es. 0.4523" oninput="render()">
-          </div>
-        </div>
-        <p class="hint">La tariffa va presa dalle tabelle ACI vigenti per il tuo modello, su base 20.000 km/anno — non è precompilata qui perché varia per veicolo.</p>
-        <a href="https://costikm.aci.it/" target="_blank" rel="noopener" class="aci-link">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><path d="M15 3h6v6"/><path d="M10 14L21 3"/></svg>
-          Cerca il costo €/km sul portale ACI
-        </a>
-        <p class="hint">Richiede autenticazione SPID / CIE / CNS (è il servizio ufficiale, non un sostituto).</p>
-      </div>
-
-      <div class="panel">
-        <p class="section-eyebrow">04 — Trasferta</p>
-        <h2 class="section-title">Tragitti percorsi</h2>
-
-        <div class="route-motif">
-          <svg viewBox="0 0 300 26" preserveAspectRatio="none" id="routeSvg"></svg>
-          <span class="count" id="routeCount">0 tappe</span>
-        </div>
-
-        <div id="trips"></div>
-        <button class="add-trip" onclick="addTrip()">+ Aggiungi tragitto</button>
-
-        <div class="field" style="margin-top:16px;">
-          <label for="luogoData">Luogo e data compilazione</label>
-          <input type="text" id="luogoData" placeholder="Milano, 14/08/2026" oninput="render()">
-        </div>
-      </div>
-
+  <!-- PREVIEW -->
+  <div id="preview">
+    <div class="preview-badge">Anteprima documento —</div>
+    <div class="preview-company">Octopus Energy</div>
+    <div class="preview-version" id="prev-version"></div>
+    <h1 style="font-size:17px;font-weight:800;margin-bottom:16px;line-height:1.3;">Dichiarazione sostitutiva e richiesta rimborso chilometrico</h1>
+    <p id="prev-intro"></p>
+    <h2>1. Dichiarazione di responsabilità</h2>
+    <div id="prev-decl"></div>
+    <h2>2. Dati del veicolo utilizzato</h2>
+    <div id="prev-veicolo"></div>
+    <h2>3. Dettaglio tragitto e trasferta</h2>
+    <div id="prev-table"></div>
+    <h2>4. Condizioni aziendali</h2>
+    <ol style="font-size:13px;line-height:1.9;padding-left:18px;">
+      <li>La quota chilometrica JET HR copre tutti i costi diretti e indiretti (carburante, usura, manutenzione, assicurazione).</li>
+      <li>Pedaggi autostradali e parcheggi non sono inclusi e vanno richiesti separatamente tramite nota spese, corredata dalle relative ricevute.</li>
+      <li>L'importo, calcolato sulle tabelle JET HR (base ACI ufficiali), non costituisce reddito ed è esente da tassazione in busta paga.</li>
+    </ol>
+    <div class="sig-row">
+      <div class="sig-box">Firma del Dipendente</div>
+      <div class="sig-box">Firma / Approvazione Team Leader</div>
     </div>
-
-    <!-- ===================== DOCUMENT PREVIEW ===================== -->
-    <div class="doc-wrap">
-      <div class="doc-toolbar no-print">
-        <span class="label">Anteprima documento</span>
-        <span class="status-pill" id="statusPill">—</span>
-      </div>
-
-      <div id="doc">
-        <div class="doc-logo-row">
-          <div class="doc-logo">
-            <div class="mark"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="9" r="6" fill="#fff"/><path d="M6 12c-2 3-2 6 0 6s2-2 2-4M18 12c2 3 2 6 0 6s-2-2-2-4M9 15c-1 2.5-1 5 .5 5s1-2 1-3.5M15 15c1 2.5 1 5-.5 5s-1-2-1-3.5" stroke="#fff" stroke-width="1.3" stroke-linecap="round"/></svg></div>
-            <strong>Octopus Energy</strong>
-          </div>
-          <div class="doc-version">v_2-20260804 · generato il <span id="genDate"></span></div>
-        </div>
-
-        <h1 class="doc-title">Dichiarazione sostitutiva e richiesta rimborso chilometrico</h1>
-
-        <p>Io sottoscritto/a <span class="blank" id="pNome">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>,
-        C.F. <span class="blank" id="pCf">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>,
-        assunto/a presso la sede aziendale di:</p>
-
-        <ul class="sede-list" id="sedeList"></ul>
-
-        <h3>1. Dichiarazione di responsabilità</h3>
-        <p style="font-size:12.5px; color:var(--slate); margin-bottom:8px;">Sotto la mia personale responsabilità, consapevole delle sanzioni disciplinari ed aziendali in caso di dichiarazioni mendaci, dichiaro che:</p>
-        <ul class="decl-list" id="declList"></ul>
-
-        <h3>2. Dati del veicolo utilizzato</h3>
-        <div class="veh-grid" id="vehGrid"></div>
-
-        <h3>3. Dettaglio tragitto e trasferta</h3>
-        <table class="trip-table">
-          <thead>
-            <tr><th>Data</th><th>Motivo del viaggio</th><th>Punto di partenza</th><th>Destinazione / tappe</th><th>Km</th></tr>
-          </thead>
-          <tbody id="tripBody"></tbody>
-          <tfoot>
-            <tr><td colspan="4" style="text-align:right;">TOTALE KM PERCORSI</td><td class="num" id="totKm">0</td></tr>
-          </tfoot>
-        </table>
-
-        <div class="calc-box">
-          <div class="formula">Totale rimborso (€) = Totale km × Tariffa ACI (€/km)</div>
-          <div class="total" id="totRimborso">€ 0,00</div>
-        </div>
-
-        <div class="conditions">
-          <h3 style="margin-top:22px;">4. Condizioni aziendali</h3>
-          <ol>
-            <li>La quota chilometrica ACI copre tutti i costi diretti e indiretti (carburante, usura, manutenzione, assicurazione).</li>
-            <li>Pedaggi autostradali e parcheggi non sono inclusi e vanno richiesti separatamente tramite nota spese, corredata dalle relative ricevute.</li>
-            <li>L'importo, calcolato sulle tabelle ACI ufficiali, non costituisce reddito ed è esente da tassazione in busta paga.</li>
-          </ol>
-        </div>
-
-        <p class="luogo-data" id="luogoDataPreview">Luogo e data: —</p>
-
-        <div class="sign-row">
-          <div class="sign-block">
-            <div class="line"></div>
-            <p>Firma del Dipendente</p>
-          </div>
-          <div class="sign-block">
-            <div class="line"></div>
-            <p>Firma / Approvazione Team Leader</p>
-          </div>
-        </div>
-
-        <p class="doc-footer-note">Una volta firmato da dipendente e Team Leader, carica il modulo su JetHR → "Rimborsi Spese".</p>
-
-        <div class="legal-footer">
-          Octopus Energy Italia Srl, società a socio unico soggetta all'attività di direzione e coordinamento di Octopus Energy Group Limited, con sede legale in Via dei Gorghi 9, 63100 Ascoli Piceno (AP), capitale sociale di euro 100.000,00 interamente versato, iscrizione al Registro delle Imprese di Ascoli Piceno AP-172389 e codice fiscale e partita I.V.A. 01771990445.
-        </div>
-      </div>
-    </div>
-
+    <p style="font-size:11px;color:var(--muted);margin-top:24px;line-height:1.6;">
+      Una volta firmato da dipendente e Team Leader, carica il modulo su JET HR → Rimborso spese, Chilometrico.<br><br>
+      Octopus Energy Italia Srl, società a socio unico soggetta all'attività di direzione e coordinamento di Octopus Energy Group Limited,
+      con sede legale in Via dei Gorghi 9, 63100 Ascoli Piceno (AP), capitale sociale di euro 100.000,00 interamente versato,
+      iscrizione al Registro delle Imprese di Ascoli Piceno AP-172389 e codice fiscale e partita I.V.A. 01771990445.
+    </p>
   </div>
+
 </div>
 
 <script>
-let trips = [];
-let tripId = 0;
+const SEDI = [
+  { label: "Milano — Viale Francesco Restelli 1/A",   value: "Viale Francesco Restelli 1/A, Milano" },
+  { label: "Ancarano — Via SP Bonifica del Tronto 22", value: "Via SP Bonifica del Tronto 22, Ancarano" },
+  { label: "Roma — Via Vittorio Veneto 54/B",          value: "Via Vittorio Veneto 54/B, Roma" },
+  { label: "Ascoli Piceno — Via dei Gorghi 9",         value: "Via dei Gorghi 9, Ascoli Piceno" },
+];
 
-function newTrip(){
-  tripId++;
-  return { id: tripId, data:'', motivo:'', partenza:'', destinazione:'', km:'' };
+const SEDI_OPTIONS = SEDI.map(s =>
+  `<option value="${s.value}">${s.label}</option>`
+).join('');
+
+let routes = [];
+let routeCounter = 0;
+
+function addRoute() {
+  const id = ++routeCounter;
+  routes.push({ id });
+  renderRoutes();
 }
 
-function addTrip(){
-  trips.push(newTrip());
-  renderTrips();
-  render();
+function removeRoute(id) {
+  routes = routes.filter(r => r.id !== id);
+  renderRoutes();
+  updateTotals();
 }
 
-function removeTrip(id){
-  trips = trips.filter(t => t.id !== id);
-  renderTrips();
-  render();
-}
-
-function updateTrip(id, field, value){
-  const t = trips.find(t => t.id === id);
-  if(t) t[field] = value;
-  render();
-}
-
-function renderTrips(){
-  const container = document.getElementById('trips');
-  container.innerHTML = '';
-  trips.forEach((t, idx) => {
-    const div = document.createElement('div');
-    div.className = 'trip';
-    div.innerHTML = `
-      <div class="trip-head">
-        <span>TRAGITTO ${idx+1}</span>
-        <button class="remove-btn" onclick="removeTrip(${t.id})">rimuovi</button>
-      </div>
-      <div class="field" style="margin-bottom:8px;">
-        <label>Data</label>
-        <input type="date" value="${t.data}" oninput="updateTrip(${t.id}, 'data', this.value)">
-      </div>
-      <div class="field" style="margin-bottom:8px;">
-        <label>Motivo del viaggio</label>
-        <input type="text" placeholder="Visita cliente XYZ" value="${t.motivo}" oninput="updateTrip(${t.id}, 'motivo', this.value)">
-      </div>
-      <div class="row2" style="margin-bottom:8px;">
-        <div class="field" style="margin-bottom:0;">
-          <label>Partenza</label>
-          <input type="text" placeholder="Sede Milano" value="${t.partenza}" oninput="updateTrip(${t.id}, 'partenza', this.value)">
-        </div>
-        <div class="field" style="margin-bottom:0;">
-          <label>Destinazione</label>
-          <input type="text" placeholder="Cliente, Bergamo" value="${t.destinazione}" oninput="updateTrip(${t.id}, 'destinazione', this.value)">
-        </div>
-      </div>
-      <div class="field" style="margin-bottom:0;">
-        <label>Km percorsi</label>
-        <input type="number" step="0.1" placeholder="0" value="${t.km}" oninput="updateTrip(${t.id}, 'km', this.value)">
-      </div>
-    `;
-    container.appendChild(div);
-  });
-}
-
-function fmtEuro(n){
-  return n.toLocaleString('it-IT', {minimumFractionDigits:2, maximumFractionDigits:2});
-}
-
-function drawRoute(n){
-  const svg = document.getElementById('routeSvg');
-  const w = 300, h = 26;
-  if(n === 0){
-    svg.innerHTML = `<line x1="4" y1="13" x2="296" y2="13" stroke="#E4DEE8" stroke-width="2" stroke-dasharray="4 5"/>`;
+function renderRoutes() {
+  const cont = document.getElementById('routes-container');
+  if (routes.length === 0) {
+    cont.innerHTML = '<p style="font-size:13px;color:var(--muted);margin-bottom:12px;">Nessun tragitto aggiunto.</p>';
+    updateTotals();
     return;
   }
-  const pts = [];
-  const segs = n + 1;
-  for(let i=0;i<=segs;i++){
-    const x = 6 + (w-12) * (i/segs);
-    const y = 13 + (i%2===0 ? -7 : 7) * (i>0 && i<segs ? 1 : 0.15);
-    pts.push([x,y]);
-  }
-  let path = `M ${pts[0][0]} ${pts[0][1]}`;
-  for(let i=1;i<pts.length;i++){
-    const [px,py] = pts[i-1];
-    const [x,y] = pts[i];
-    const mx = (px+x)/2;
-    path += ` Q ${mx} ${py} ${x} ${y}`;
-  }
-  let dots = '';
-  for(let i=1;i<pts.length-1;i++){
-    dots += `<circle cx="${pts[i][0]}" cy="${pts[i][1]}" r="3.2" fill="#E6007E"/>`;
-  }
-  dots += `<circle cx="${pts[0][0]}" cy="${pts[0][1]}" r="3.4" fill="#4B2E83"/>`;
-  dots += `<circle cx="${pts[pts.length-1][0]}" cy="${pts[pts.length-1][1]}" r="3.4" fill="#4B2E83"/>`;
-  svg.innerHTML = `<path d="${path}" fill="none" stroke="#E6007E" stroke-width="2" stroke-linecap="round" opacity="0.55"/>${dots}`;
+  cont.innerHTML = routes.map((r, i) => `
+    <div class="route-item" id="route-${r.id}">
+      <div class="route-header">
+        <span class="route-num">Tragitto ${i+1}</span>
+        <button class="route-remove" onclick="removeRoute(${r.id})" title="Rimuovi">×</button>
+      </div>
+      <div class="row2">
+        <div class="field">
+          <label>Data</label>
+          <input type="date" id="r${r.id}-data" onchange="updateTotals()">
+        </div>
+        <div class="field">
+          <label>Motivo del viaggio</label>
+          <input type="text" id="r${r.id}-motivo" placeholder="es. visita cliente, riunione interna" oninput="updateTotals()">
+        </div>
+      </div>
+      <div class="field">
+        <label>Partenza</label>
+        <select id="r${r.id}-from-sel" onchange="toggleCustom('from',${r.id})">
+          <option value="">— seleziona sede o altro —</option>
+          ${SEDI_OPTIONS}
+          <option value="__altro__">Altro indirizzo (inserisci manualmente)</option>
+        </select>
+        <input type="text" class="custom-addr" id="r${r.id}-from-txt" placeholder="Indirizzo completo" oninput="updateTotals()">
+      </div>
+      <div class="field">
+        <label>Destinazione</label>
+        <select id="r${r.id}-to-sel" onchange="toggleCustom('to',${r.id})">
+          <option value="">— seleziona sede o altro —</option>
+          ${SEDI_OPTIONS}
+          <option value="__altro__">Altro indirizzo (inserisci manualmente)</option>
+        </select>
+        <input type="text" class="custom-addr" id="r${r.id}-to-txt" placeholder="Indirizzo completo" oninput="updateTotals()">
+      </div>
+      <div class="field">
+        <label>Km percorsi (andata)</label>
+        <input type="number" id="r${r.id}-km" min="0" step="0.1" placeholder="0" oninput="updateTotals()">
+        <small>Inserisci solo i km dell'andata se compili un tragitto separato per il ritorno, oppure i km totali A/R.</small>
+      </div>
+    </div>
+  `).join('');
+  updateTotals();
 }
 
-function render(){
+function toggleCustom(dir, id) {
+  const sel = document.getElementById(`r${id}-${dir}-sel`);
+  const txt = document.getElementById(`r${id}-${dir}-txt`);
+  txt.style.display = sel.value === '__altro__' ? 'block' : 'none';
+  updateTotals();
+}
+
+function getAddr(dir, id) {
+  const sel = document.getElementById(`r${id}-${dir}-sel`);
+  if (!sel) return '';
+  if (sel.value === '__altro__') return document.getElementById(`r${id}-${dir}-txt`)?.value.trim() || '';
+  return sel.value;
+}
+
+function updateTotals() {
+  let km = 0;
+  routes.forEach(r => {
+    km += parseFloat(document.getElementById(`r${r.id}-km`)?.value) || 0;
+  });
+  const tariffa = parseFloat(document.getElementById('tariffa')?.value) || 0;
+  document.getElementById('total-km').textContent = km.toFixed(1) + ' km';
+  document.getElementById('rate-line').textContent = tariffa > 0 ? `× ${tariffa.toFixed(4)} €/km` : '× — €/km';
+  document.getElementById('total-euro').textContent = '€ ' + (km * tariffa).toLocaleString('it-IT', {minimumFractionDigits:2, maximumFractionDigits:2});
+  updateButtonState();
+}
+
+function onCheckChange() {
+  ['perk','pub','auto','veicolo'].forEach(k => {
+    const wrap = document.getElementById(`wrap-${k}`);
+    const chk = document.getElementById(`chk-${k}`);
+    if (!wrap || !chk) return;
+    wrap.classList.toggle('checked', chk.checked);
+    wrap.classList.remove('missing');
+  });
+  updateButtonState();
+}
+
+function onSedeChange() {
+  const chk = document.getElementById('chk-sede');
+  const block = document.getElementById('exception-block');
+  const wrap = document.getElementById('wrap-sede-chk');
+  wrap.classList.toggle('checked', chk.checked);
+  if (chk.checked) {
+    block.classList.remove('visible');
+    document.getElementById('exception-text').value = '';
+  } else {
+    block.classList.add('visible');
+  }
+  updateButtonState();
+}
+
+function updateButtonState() {
+  const required = ['perk','pub','auto','veicolo'];
+  const allChecked = required.every(k => document.getElementById(`chk-${k}`)?.checked);
+  const sedeTick = document.getElementById('chk-sede').checked;
+  const exText = (document.getElementById('exception-text')?.value || '').trim();
+  const sedeOk = sedeTick || exText.length > 0;
+  document.getElementById('btn-genera').disabled = !(allChecked && sedeOk);
+}
+
+function genera() {
   const nome = document.getElementById('nome').value.trim();
-  const cf = document.getElementById('cf').value.trim().toUpperCase();
+  const cf = document.getElementById('cf').value.trim();
   const sede = document.getElementById('sede').value;
-  const chk1 = document.getElementById('chk1').checked;
-  const chk2 = document.getElementById('chk2').checked;
-  const chk3 = document.getElementById('chk3').checked;
-  const motivoDiverso = document.getElementById('motivoDiverso').value.trim();
-  const marca = document.getElementById('marca').value.trim();
-  const cilindrata = document.getElementById('cilindrata').value.trim();
-  const targa = document.getElementById('targa').value.trim().toUpperCase();
-  const anno = document.getElementById('anno').value.trim();
-  const alimentazione = document.getElementById('alimentazione').value;
+  const modello = document.getElementById('modello').value.trim();
+  const targa = document.getElementById('targa').value.trim();
+  const cil = document.getElementById('cilindrata').value;
+  const anno = document.getElementById('anno').value;
+  const alim = document.getElementById('alimentazione').value;
   const tariffa = parseFloat(document.getElementById('tariffa').value) || 0;
-  const luogoData = document.getElementById('luogoData').value.trim();
+  const luogo = document.getElementById('luogo').value.trim();
+  const dataFirma = document.getElementById('data-firma').value;
 
-  // Identity blanks
-  document.getElementById('pNome').textContent = nome || '\u00A0'.repeat(30);
-  document.getElementById('pCf').textContent = cf || '\u00A0'.repeat(20);
+  const hint = document.getElementById('validation-hint');
 
-  // Sede list
-  const sedi = ['Milano','Ancarano','Roma','Ascoli Piceno'];
-  document.getElementById('sedeList').innerHTML = sedi.map(s =>
-    `<li><span class="box ${s===sede?'checked':''}"></span>${s}</li>`
-  ).join('');
-
-  // Declarations
-  const decl = [
-    {ok:chk1, text:"L'uso del mezzo proprio si è reso necessario in quanto i mezzi pubblici non erano idonei/utilizzabili e l'auto aziendale risultava già prenotata o non disponibile."},
-    {ok:chk2, text:"Il veicolo utilizzato è di mia proprietà o il mio nome è riportato sulla carta di circolazione del mezzo."},
-    {ok:chk3, text:"Il viaggio è iniziato ed è terminato presso la sede contrattuale di lavoro."},
-  ];
-  let declHtml = decl.map(d => `<li><span class="box ${d.ok?'checked':''}"></span>${d.text}</li>`).join('');
-  if(motivoDiverso){
-    declHtml += `<li class="decl-note">Nota partenza/rientro da luogo diverso: ${motivoDiverso}</li>`;
+  if (!nome || !cf || !sede || !modello || !targa || !tariffa || routes.length === 0 || !luogo || !dataFirma) {
+    hint.style.display = 'block';
+    hint.textContent = '⚠ Compila tutti i campi obbligatori: dati dipendente, veicolo, tariffa JET HR, almeno un tragitto, luogo e data.';
+    return;
   }
-  document.getElementById('declList').innerHTML = declHtml;
 
-  // Vehicle grid
-  const vehRows = [
-    ['Marca e modello', marca || '—'],
-    ['Cilindrata', cilindrata || '—'],
-    ['Targa', targa || '—'],
-    ['Anno', anno || '—'],
-    ['Alimentazione', alimentazione],
-    ['Tariffa ACI (€/km, 20.000 km/anno)', tariffa ? '€ ' + tariffa.toFixed(4) : '—'],
+  const required = ['perk','pub','auto','veicolo'];
+  let missingChecks = false;
+  required.forEach(k => {
+    const chk = document.getElementById(`chk-${k}`);
+    const wrap = document.getElementById(`wrap-${k}`);
+    if (!chk.checked) { wrap.classList.add('missing'); missingChecks = true; }
+  });
+  if (missingChecks) {
+    hint.style.display = 'block';
+    hint.textContent = '⚠ Spunta tutte le dichiarazioni obbligatorie evidenziate in rosso.';
+    return;
+  }
+
+  hint.style.display = 'none';
+
+  const sedeTick = document.getElementById('chk-sede').checked;
+  const exText = document.getElementById('exception-text').value.trim();
+
+  const declItems = [
+    'Ho valutato l\'uso di mezzi pubblici su Perk: non idonei/disponibili per questo tragitto.',
+    'Ho valutato l\'uso di mezzi pubblici non su Perk: non idonei/disponibili per questo tragitto.',
+    'Ho valutato l\'uso dell\'auto aziendale: non disponibile per questa trasferta.',
+    'Il veicolo utilizzato è di mia proprietà o il mio nome è riportato sulla carta di circolazione.',
   ];
-  document.getElementById('vehGrid').innerHTML = vehRows.map(([k,v]) =>
-    `<div><span class="k">${k}</span><span class="v">${v}</span></div>`
-  ).join('');
+  if (sedeTick) {
+    declItems.push('Il viaggio è iniziato ed è terminato presso la sede contrattuale di lavoro (' + sede + ').');
+  } else {
+    declItems.push('⚠ Partenza/rientro da luogo diverso dalla sede. Motivazione approvata dal Team Leader: ' + exText);
+  }
 
-  // Trips table
+  document.getElementById('prev-version').textContent =
+    'v_2-' + new Date().toISOString().slice(0,10).replace(/-/g,'') + ' · generato il ' + new Date().toLocaleDateString('it-IT');
+
+  document.getElementById('prev-intro').innerHTML =
+    `Io sottoscritto/a <strong>${nome}</strong>, C.F. <strong>${cf}</strong>, assunto/a presso la sede aziendale di: <strong>${sede}</strong>,<br>
+    sotto la mia personale responsabilità, consapevole delle sanzioni disciplinari ed aziendali in caso di dichiarazioni mendaci, dichiaro che:`;
+
+  document.getElementById('prev-decl').innerHTML =
+    '<ul style="padding-left:18px;font-size:13.5px;line-height:1.8;">' +
+    declItems.map(d => `<li>${d}</li>`).join('') + '</ul>';
+
+  document.getElementById('prev-veicolo').innerHTML =
+    `<p style="font-size:13.5px;line-height:1.8;">
+      <strong>Veicolo:</strong> ${modello} &nbsp;|&nbsp;
+      <strong>Targa:</strong> ${targa} &nbsp;|&nbsp;
+      <strong>Cilindrata:</strong> ${cil} cc &nbsp;|&nbsp;
+      <strong>Anno:</strong> ${anno} &nbsp;|&nbsp;
+      <strong>Alimentazione:</strong> ${alim}<br>
+      <strong>Tariffa JET HR (ACI base 20.000 km/anno):</strong> € ${tariffa.toFixed(4)}/km
+    </p>`;
+
   let totalKm = 0;
-  const tbody = document.getElementById('tripBody');
-  if(trips.length === 0){
-    tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; color:var(--slate); font-style:italic;">Nessun tragitto inserito</td></tr>`;
-  } else {
-    tbody.innerHTML = trips.map(t => {
-      const km = parseFloat(t.km) || 0;
-      totalKm += km;
-      const dataFmt = t.data ? new Date(t.data).toLocaleDateString('it-IT') : '—';
-      return `<tr>
-        <td>${dataFmt}</td>
-        <td>${t.motivo || '—'}</td>
-        <td>${t.partenza || '—'}</td>
-        <td>${t.destinazione || '—'}</td>
-        <td class="num">${km ? km.toLocaleString('it-IT') : '0'}</td>
-      </tr>`;
-    }).join('');
+  const rows = routes.map(r => {
+    const km = parseFloat(document.getElementById(`r${r.id}-km`)?.value) || 0;
+    totalKm += km;
+    const d = document.getElementById(`r${r.id}-data`)?.value || '';
+    const motivo = document.getElementById(`r${r.id}-motivo`)?.value || '';
+    const from = getAddr('from', r.id);
+    const to = getAddr('to', r.id);
+    const dataFmt = d ? new Date(d).toLocaleDateString('it-IT') : '—';
+    return `<tr><td>${dataFmt}</td><td>${motivo}</td><td>${from}</td><td>${to}</td><td><strong>${km.toFixed(1)}</strong></td></tr>`;
+  }).join('');
+
+  document.getElementById('prev-table').innerHTML = `
+    <table>
+      <thead><tr><th>Data</th><th>Motivo</th><th>Partenza</th><th>Destinazione</th><th>Km</th></tr></thead>
+      <tbody>
+        ${rows}
+        <tr style="border-top:2px solid var(--ink);">
+          <td colspan="4"><strong>TOTALE KM PERCORSI</strong></td>
+          <td><strong>${totalKm.toFixed(1)}</strong></td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="font-size:13px;margin-top:12px;">
+      <strong>Totale rimborso:</strong> ${totalKm.toFixed(1)} km × € ${tariffa.toFixed(4)}/km =
+      <strong>€ ${(totalKm * tariffa).toLocaleString('it-IT', {minimumFractionDigits:2,maximumFractionDigits:2})}</strong>
+    </p>
+    <p style="font-size:13px;margin-top:6px;">Luogo e data: <strong>${luogo}, ${dataFirma ? new Date(dataFirma).toLocaleDateString('it-IT') : '—'}</strong></p>
+  `;
+
+  const preview = document.getElementById('preview');
+  preview.classList.add('visible');
+  preview.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function stampaPDF() {
+  const preview = document.getElementById('preview');
+  if (!preview.classList.contains('visible')) {
+    const hint = document.getElementById('validation-hint');
+    hint.style.display = 'block';
+    hint.textContent = '⚠ Clicca prima "Genera documento" per compilare il documento, poi potrai stamparlo.';
+    return;
   }
-  document.getElementById('totKm').textContent = totalKm.toLocaleString('it-IT');
-
-  const rimborso = totalKm * tariffa;
-  document.getElementById('totRimborso').textContent = '€ ' + fmtEuro(rimborso);
-
-  document.getElementById('luogoDataPreview').textContent = 'Luogo e data: ' + (luogoData || '—');
-
-  // route motif
-  drawRoute(trips.length);
-  document.getElementById('routeCount').textContent = trips.length + (trips.length === 1 ? ' tappa' : ' tappe');
-
-  // status pill
-  const pill = document.getElementById('statusPill');
-  const missing = [];
-  if(!nome) missing.push('nome');
-  if(!cf) missing.push('CF');
-  if(!targa) missing.push('targa');
-  if(!tariffa) missing.push('tariffa ACI');
-  if(trips.length===0) missing.push('tragitti');
-  if(missing.length===0){
-    pill.textContent = 'Pronto per la stampa';
-    pill.className = 'status-pill status-ok';
-  } else {
-    pill.textContent = 'Manca: ' + missing.join(', ');
-    pill.className = 'status-pill status-warn';
-  }
-
-  document.getElementById('genDate').textContent = new Date().toLocaleDateString('it-IT');
+  window.print();
 }
 
 // init
-addTrip();
-render();
+renderRoutes();
+document.getElementById('data-firma').value = new Date().toISOString().slice(0,10);
 </script>
-
 </body>
 </html>
